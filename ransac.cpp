@@ -9,7 +9,6 @@
 
 int main(int argc, char* argv[])
 {
-    // by defult, use the file pointcloud.txt, but if you supply a command line argument, use that instead
     std::string input_filename{"pointcloud1.txt"};
     if (argc >= 2) {
         input_filename = argv[1];
@@ -36,8 +35,6 @@ int main(int argc, char* argv[])
         points(i, 1) = y;
         points(i, 2) = z;
     }
-
-    // now run RANSAC
 
     AnalyticFitter af(num_points);
     LeastSquaresFitter lf(num_points, 10);
