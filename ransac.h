@@ -31,11 +31,6 @@ std::ostream &operator<<(std::ostream &os, Plane const &plane)
 
 Plane compute_plane_from_points(Eigen::Vector3d const &p0, Eigen::Vector3d const &p1, Eigen::Vector3d const &p2)
 {
-    // 1. given p0, p1, and p2 form two vectors v1 and v2 which lie on the plane
-    // 2. use v1 and v2 to find the normal vector of the plane `n`
-    // 3. set a,b,c from the normal vector `n`
-    // 4. set `d = -n.dot(p0)`
-    // --- Your code here
     Eigen::Vector3d vect1;
     Eigen::Vector3d vect2;
     vect1 = p1 - p0;
@@ -47,8 +42,6 @@ Plane compute_plane_from_points(Eigen::Vector3d const &p0, Eigen::Vector3d const
     p_plane.c = normal_vec(2);
     p_plane.d = -normal_vec.dot(p0);
     return p_plane;
-
-    // ---
 }
 
 class BaseFitter
@@ -90,11 +83,7 @@ public:
     // in the base class. Always use this to prevent mistakes in the function signature!
     FitResult fit(Eigen::MatrixXd const &points) override
     {
-        // 1. select 3 points from `points` randomly
-        // 2. compute the equation of the plane (HINT: use compute_plane_from_points)
-        // 3. compute the `n_inliers` given that plane equation
-        // (HINT: multiply the points matrix by the normal vector)
-        // --- Your code here
+
         int random_point1 = get_random_point_idx();
         int random_point2 = get_random_point_idx();
         int random_point3 = get_random_point_idx();
@@ -118,8 +107,6 @@ public:
         }
         int n_inliers = count;
 
-        // ---
-
         return {analytic_plane, n_inliers};
     }
 };
@@ -129,8 +116,6 @@ class LeastSquaresFitter : public BaseFitter
 public:
     LeastSquaresFitter(int num_points, int n_sample_points) : BaseFitter(num_points), n_sample_points_(n_sample_points) {}
 
-    // You should override the `fit` method here
-    // --- Your code here
     FitResult fit(Eigen::MatrixXd const &points) override
     {
         Eigen::MatrixXd ran_les(n_sample_points_,3);
@@ -176,7 +161,7 @@ public:
 
 Plane ransac(BaseFitter &fitter, Eigen::MatrixXd const &points)
 {
-    // --- Your code here
+
     FitResult best_result;
     best_result = fitter.fit(points);
     for (int i = 0; i<=25; i++)
@@ -187,9 +172,7 @@ Plane ransac(BaseFitter &fitter, Eigen::MatrixXd const &points)
             best_result = result;
         }
     }
-    // ---
 
-    // HINT: the number of inliers should be between 20 and 80 if you did everything correctly
     std::cout << best_result.n_inliers << std::endl;
     return best_result.plane;
 }
