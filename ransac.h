@@ -67,8 +67,6 @@ public:
     double const inlier_threshold_{0.09};
 
 private:
-    // These are for generating random indices, you don't need to know how they work.
-    // Just use `get_random_point_idx()` and `points.row(rand_idx)`
     std::random_device rd;
     std::mt19937 mt;
     std::uniform_int_distribution<int> dist;
@@ -79,8 +77,6 @@ class AnalyticFitter : public BaseFitter
 public:
     AnalyticFitter(int num_points) : BaseFitter(num_points) {}
 
-    // by writing `override`, the compiler will check that this function actually overrides something
-    // in the base class. Always use this to prevent mistakes in the function signature!
     FitResult fit(Eigen::MatrixXd const &points) override
     {
 
@@ -153,9 +149,6 @@ public:
 
         return {a_var,n_inliers};
     }
-
-    // ---
-
     int const n_sample_points_;
 };
 
