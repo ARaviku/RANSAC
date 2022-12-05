@@ -50,7 +50,6 @@ int main(int argc, char* argv[])
     {
         Plane const lf_plane = ransac(lf, points);
         ofs << lf_plane << "\n";
-        // these print statements are useful for passing into viz_plane.py
         pretty_print(input_filename, lf_plane);
     }
     
