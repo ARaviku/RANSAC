@@ -52,11 +52,7 @@ public:
         mt.seed(0);
     }
 
-    /**
-     * Given all of the data `points`, select a random subset and fit a plane to that subset.
-     * the parameter points is all of the points
-     * the return value is the FitResult which contains the parameters of the plane (a,b,c,d) and the number of inliers
-     */
+
     virtual FitResult fit(Eigen::MatrixXd const &points) = 0;
 
     int get_random_point_idx()
